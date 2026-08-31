@@ -10,5 +10,9 @@ readme = "README.md"
 requires-python = ">=3.10"
 license = { text = "MIT" }
 
+[project.scripts]
+optattacklens = "optattacklens.cli:main"
+
+
 [tool.setuptools.packages.find]
 where = ["src"]
