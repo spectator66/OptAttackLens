@@ -217,9 +217,4 @@ __marimo__/
 # Streamlit
 .streamlit/secrets.toml
 
-summary.json
-summary.csv
-result.json
-result.csv
-asr_curve.png
-result.png
+outputs/
