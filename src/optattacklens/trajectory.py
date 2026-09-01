@@ -18,3 +18,19 @@ def group_by_run(
         run_steps.sort(key=lambda item: item.step)
 
     return grouped
+def extract_score_progression(
+    steps: list[AttackStep],
+) -> list[tuple[int, float]]:
+    """Extract (step, score) pairs from a single attack run."""
+
+    progression: list[tuple[int, float]] = []
+
+    for step in steps:
+        if step.score is None:
+            continue
+
+        progression.append((step.step, step.score))
+
+    progression.sort(key=lambda item: item[0])
+
+    return progression
