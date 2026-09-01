@@ -1,5 +1,6 @@
 import argparse
 
+from optattacklens.visualization.asr_curve import save_asr_curve   
 from optattacklens.export import (
     save_summary_csv,
     save_summary_json,
@@ -40,6 +41,11 @@ def main() -> None:
         help="Save summary as a CSV file.",
     )
 
+    analyze_parser.add_argument(
+        "--plot",
+        dest="plot_path",
+        help="Save the ASR-vs-query-budget curve as an image.",
+    )
     args = parser.parse_args()
 
     if args.command == "analyze":
@@ -65,8 +71,7 @@ def main() -> None:
             summary,
             args.json_path,
         )
-                
-        print(f"Saved JSON summary to: {args.json_path}")
+            print(f"Saved JSON summary to: {args.json_path}")
                 
                 
         if args.csv_path:
@@ -74,8 +79,16 @@ def main() -> None:
             summary,
             args.csv_path,
         )
-        
-        print(f"Saved CSV summary to: {args.csv_path}")
+            print(f"Saved CSV summary to: {args.csv_path}")
+
+        if args.plot_path:
+            save_asr_curve(
+            steps,
+            args.plot_path,
+        )
+
+            print(f"Saved ASR curve to: {args.plot_path}")
+
     else:
         parser.print_help()
 

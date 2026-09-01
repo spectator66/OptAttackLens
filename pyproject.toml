@@ -10,6 +10,10 @@ readme = "README.md"
 requires-python = ">=3.10"
 license = { text = "MIT" }
 
+dependencies = [
+    "matplotlib>=3.8",
+]
+
 [project.scripts]
 optattacklens = "optattacklens.cli:main"
 
