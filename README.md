@@ -6,6 +6,23 @@ OptAttackLens focuses on a question that final attack success rate alone cannot 
 
 > **How efficiently does an optimization-based attack reach success?**
 
+## Why OptAttackLens?
+
+Two attacks can achieve similar final attack success rates while requiring very different amounts of search.
+
+For example:
+
+| Attack | Final ASR | Median Queries-to-Success |
+|---|---:|---:|
+| Method A | 82% | 7 |
+| Method B | 85% | 35 |
+
+Looking only at final ASR makes these attacks appear almost equivalent.
+
+OptAttackLens instead analyzes how attack success changes as query budget increases, making search efficiency visible.
+
+![ASR vs Query Budget](docs/assets/asr_curve.png)
+
 Instead of looking only at final ASR, OptAttackLens analyzes query-budget efficiency and attack trajectories.
 
 ---
