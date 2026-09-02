@@ -302,4 +302,3 @@ def test_longest_plateau_without_scores():
 
     assert longest_plateau(steps) == 0
 
-    
