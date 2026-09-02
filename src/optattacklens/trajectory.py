@@ -18,10 +18,22 @@ def group_by_run(
         run_steps.sort(key=lambda item: item.step)
 
     return grouped
+
+def _validate_single_run(steps: list[AttackStep]) -> None:
+    """Ensure that all steps belong to the same attack run."""
+
+    run_ids = {step.run_id for step in steps}
+
+    if len(run_ids) > 1:
+        raise ValueError("steps must belong to a single run")
+
+
 def extract_score_progression(
     steps: list[AttackStep],
 ) -> list[tuple[int, float]]:
     """Extract (step, score) pairs from a single attack run."""
+
+    _validate_single_run(steps)
 
     progression: list[tuple[int, float]] = []
 
@@ -34,3 +46,55 @@ def extract_score_progression(
     progression.sort(key=lambda item: item[0])
 
     return progression
+
+def initial_score(
+    steps: list[AttackStep],
+) -> float | None:
+    """Return the first available score in a trajectory."""
+
+    progression = extract_score_progression(steps)
+
+    if not progression:
+        return None
+
+    return progression[0][1]
+
+
+def final_score(
+    steps: list[AttackStep],
+) -> float | None:
+    """Return the last available score in a trajectory."""
+
+    progression = extract_score_progression(steps)
+
+    if not progression:
+        return None
+
+    return progression[-1][1]
+
+
+def best_score(
+    steps: list[AttackStep],
+) -> float | None:
+    """Return the highest score reached in a trajectory."""
+
+    progression = extract_score_progression(steps)
+
+    if not progression:
+        return None
+
+    return max(score for _, score in progression)
+
+
+def total_improvement(
+    steps: list[AttackStep],
+) -> float | None:
+    """Return the difference between final and initial score."""
+
+    start = initial_score(steps)
+    end = final_score(steps)
+
+    if start is None or end is None:
+        return None
+
+    return end - start
