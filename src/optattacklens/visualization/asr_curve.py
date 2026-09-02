@@ -12,10 +12,7 @@ def calculate_asr_curve(
 ) -> list[float]:
     """Calculate ASR values across query budgets."""
 
-    return [
-        calculate_asr_at_k(steps, budget)
-        for budget in budgets
-    ]
+    return [calculate_asr_at_k(steps, budget) for budget in budgets]
 
 
 def save_asr_curve(
