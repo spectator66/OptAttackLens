@@ -19,6 +19,7 @@ def group_by_run(
 
     return grouped
 
+
 def _validate_single_run(steps: list[AttackStep]) -> None:
     """Ensure that all steps belong to the same attack run."""
 
@@ -46,6 +47,7 @@ def extract_score_progression(
     progression.sort(key=lambda item: item[0])
 
     return progression
+
 
 def initial_score(
     steps: list[AttackStep],
@@ -85,6 +87,7 @@ def best_score(
 
     return max(score for _, score in progression)
 
+
 def time_to_best(
     steps: list[AttackStep],
 ) -> int | None:
@@ -102,6 +105,7 @@ def time_to_best(
             return step
 
     return None
+
 
 def longest_plateau(
     steps: list[AttackStep],
@@ -126,6 +130,7 @@ def longest_plateau(
             longest = max(longest, current_plateau)
 
     return longest
+
 
 def total_improvement(
     steps: list[AttackStep],

@@ -1,4 +1,5 @@
 import pytest
+
 from optattacklens.schema import AttackStep
 from optattacklens.trajectory import (
     best_score,
@@ -6,9 +7,9 @@ from optattacklens.trajectory import (
     final_score,
     group_by_run,
     initial_score,
+    longest_plateau,
     time_to_best,
     total_improvement,
-    longest_plateau,
 )
 
 
@@ -51,8 +52,10 @@ def test_group_by_run():
     assert grouped["run_001"][1].step == 1
     assert grouped["run_001"][2].step == 2
 
+
 def test_group_by_run_empty():
     assert group_by_run([]) == {}
+
 
 def test_extract_score_progression():
     steps = [
@@ -94,6 +97,7 @@ def test_extract_score_progression():
         (3, 0.91),
     ]
 
+
 def test_extract_score_progression_keeps_zero_score():
     steps = [
         AttackStep(
@@ -108,6 +112,7 @@ def test_extract_score_progression_keeps_zero_score():
     progression = extract_score_progression(steps)
 
     assert progression == [(0, 0.0)]
+
 
 def test_extract_score_progression_rejects_multiple_runs():
     steps = [
@@ -132,6 +137,7 @@ def test_extract_score_progression_rejects_multiple_runs():
         match="steps must belong to a single run",
     ):
         extract_score_progression(steps)
+
 
 def test_basic_trajectory_metrics():
     steps = [
@@ -170,6 +176,7 @@ def test_basic_trajectory_metrics():
     assert best_score(steps) == 0.80
     assert total_improvement(steps) == pytest.approx(0.70)
 
+
 def test_basic_trajectory_metrics_without_scores():
     steps = [
         AttackStep(
@@ -185,6 +192,7 @@ def test_basic_trajectory_metrics_without_scores():
     assert final_score(steps) is None
     assert best_score(steps) is None
     assert total_improvement(steps) is None
+
 
 def test_time_to_best_returns_first_best_step():
     steps = [
@@ -219,6 +227,7 @@ def test_time_to_best_returns_first_best_step():
     ]
 
     assert time_to_best(steps) == 1
+
 
 def test_longest_plateau():
     steps = [
@@ -261,6 +270,7 @@ def test_longest_plateau():
 
     assert longest_plateau(steps) == 2
 
+
 def test_longest_plateau_with_continuous_improvement():
     steps = [
         AttackStep(
@@ -301,4 +311,3 @@ def test_longest_plateau_without_scores():
     ]
 
     assert longest_plateau(steps) == 0
-

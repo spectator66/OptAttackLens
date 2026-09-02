@@ -1,9 +1,10 @@
 from optattacklens.schema import AttackStep
 from optattacklens.summary import (
     mean_longest_plateau,
-    mean_time_to_best,  
+    mean_time_to_best,
     summarize_trace,
 )
+
 
 def test_summarize_trace():
     steps = [
@@ -28,7 +29,7 @@ def test_summarize_trace():
         AttackStep(
             run_id="run_004",
             step=0,
-            queries=25, 
+            queries=25,
             success=False,
         ),
     ]
@@ -44,6 +45,8 @@ def test_summarize_trace():
     assert summary["asr_at_5"] == 0.25
     assert summary["asr_at_10"] == 0.5
     assert summary["asr_at_20"] == 0.75
+
+
 def test_summarize_trace_default_budgets():
     steps = [
         AttackStep(
@@ -59,12 +62,15 @@ def test_summarize_trace_default_budgets():
     assert "asr_at_5" in summary
     assert "asr_at_10" in summary
     assert "asr_at_20" in summary
+
+
 def test_summarize_empty_trace():
     summary = summarize_trace([])
 
     assert summary["asr"] == 0.0
     assert summary["median_queries_to_success"] is None
     assert summary["asr_at_5"] == 0.0
+
 
 def test_mean_time_to_best():
     steps = [
@@ -99,6 +105,7 @@ def test_mean_time_to_best():
     ]
 
     assert mean_time_to_best(steps) == 3.0
+
 
 def test_mean_longest_plateau():
     steps = [

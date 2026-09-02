@@ -7,6 +7,7 @@ from optattacklens.trajectory import (
     time_to_best,
 )
 
+
 def mean_time_to_best(
     steps: list[AttackStep],
 ) -> float | None:
@@ -36,10 +37,7 @@ def mean_longest_plateau(
     values: list[int] = []
 
     for run_steps in grouped.values():
-        has_score = any(
-            step.score is not None
-            for step in run_steps
-        )
+        has_score = any(step.score is not None for step in run_steps)
 
         if not has_score:
             continue
@@ -50,6 +48,7 @@ def mean_longest_plateau(
         return None
 
     return sum(values) / len(values)
+
 
 def summarize_trace(
     steps: list[AttackStep],
@@ -64,7 +63,7 @@ def summarize_trace(
         "asr": calculate_asr(steps),
         "median_queries_to_success": median_queries_to_success(steps),
         "mean_time_to_best": mean_time_to_best(steps),
-        "mean_longest_plateau": mean_longest_plateau(steps),    
+        "mean_longest_plateau": mean_longest_plateau(steps),
     }
 
     for budget in budgets:

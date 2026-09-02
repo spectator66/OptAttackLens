@@ -20,6 +20,7 @@ def queries_to_success(
 
     return result
 
+
 def median_queries_to_success(
     steps: list[AttackStep],
 ) -> float | None:
@@ -28,9 +29,7 @@ def median_queries_to_success(
     results = queries_to_success(steps)
 
     successful_queries = [
-        queries
-        for queries in results.values()
-        if queries is not None
+        queries for queries in results.values() if queries is not None
     ]
 
     if not successful_queries:
@@ -44,7 +43,4 @@ def median_queries_to_success(
     if n % 2 == 1:
         return float(successful_queries[middle])
 
-    return (
-        successful_queries[middle - 1]
-        + successful_queries[middle]
-    ) / 2
+    return (successful_queries[middle - 1] + successful_queries[middle]) / 2

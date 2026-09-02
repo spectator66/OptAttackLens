@@ -1,12 +1,12 @@
 import argparse
 
-from optattacklens.visualization.asr_curve import save_asr_curve   
 from optattacklens.export import (
     save_summary_csv,
     save_summary_json,
 )
 from optattacklens.loader import load_trace
 from optattacklens.summary import summarize_trace
+from optattacklens.visualization.asr_curve import save_asr_curve
 
 
 def main() -> None:
@@ -59,7 +59,7 @@ def main() -> None:
         mean_ttb = summary["mean_time_to_best"]
 
         if mean_ttb is None:
-            print("Mean Time-to-Best:         N/A") 
+            print("Mean Time-to-Best:         N/A")
         else:
             print(f"Mean Time-to-Best:         {mean_ttb:g}")
 
@@ -87,8 +87,7 @@ def main() -> None:
                 args.json_path,
             )
             print(f"Saved JSON summary to: {args.json_path}")
-                
-                
+
         if args.csv_path:
             save_summary_csv(
                 summary,
