@@ -85,6 +85,47 @@ def best_score(
 
     return max(score for _, score in progression)
 
+def time_to_best(
+    steps: list[AttackStep],
+) -> int | None:
+    """Return the first step at which the best score is reached."""
+
+    progression = extract_score_progression(steps)
+
+    if not progression:
+        return None
+
+    best = max(score for _, score in progression)
+
+    for step, score in progression:
+        if score == best:
+            return step
+
+    return None
+
+def longest_plateau(
+    steps: list[AttackStep],
+) -> int:
+    """Return the longest number of consecutive steps without a new best score."""
+
+    progression = extract_score_progression(steps)
+
+    if not progression:
+        return 0
+
+    best_so_far = progression[0][1]
+    current_plateau = 0
+    longest = 0
+
+    for _, score in progression[1:]:
+        if score > best_so_far:
+            best_so_far = score
+            current_plateau = 0
+        else:
+            current_plateau += 1
+            longest = max(longest, current_plateau)
+
+    return longest
 
 def total_improvement(
     steps: list[AttackStep],

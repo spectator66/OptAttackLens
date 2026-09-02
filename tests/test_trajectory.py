@@ -6,7 +6,9 @@ from optattacklens.trajectory import (
     final_score,
     group_by_run,
     initial_score,
+    time_to_best,
     total_improvement,
+    longest_plateau,
 )
 
 
@@ -184,3 +186,120 @@ def test_basic_trajectory_metrics_without_scores():
     assert best_score(steps) is None
     assert total_improvement(steps) is None
 
+def test_time_to_best_returns_first_best_step():
+    steps = [
+        AttackStep(
+            run_id="run_001",
+            step=0,
+            queries=1,
+            success=False,
+            score=0.10,
+        ),
+        AttackStep(
+            run_id="run_001",
+            step=1,
+            queries=2,
+            success=False,
+            score=0.90,
+        ),
+        AttackStep(
+            run_id="run_001",
+            step=2,
+            queries=3,
+            success=False,
+            score=0.60,
+        ),
+        AttackStep(
+            run_id="run_001",
+            step=3,
+            queries=4,
+            success=True,
+            score=0.90,
+        ),
+    ]
+
+    assert time_to_best(steps) == 1
+
+def test_longest_plateau():
+    steps = [
+        AttackStep(
+            run_id="run_001",
+            step=0,
+            queries=1,
+            success=False,
+            score=0.10,
+        ),
+        AttackStep(
+            run_id="run_001",
+            step=1,
+            queries=2,
+            success=False,
+            score=0.40,
+        ),
+        AttackStep(
+            run_id="run_001",
+            step=2,
+            queries=3,
+            success=False,
+            score=0.40,
+        ),
+        AttackStep(
+            run_id="run_001",
+            step=3,
+            queries=4,
+            success=False,
+            score=0.35,
+        ),
+        AttackStep(
+            run_id="run_001",
+            step=4,
+            queries=5,
+            success=True,
+            score=0.41,
+        ),
+    ]
+
+    assert longest_plateau(steps) == 2
+
+def test_longest_plateau_with_continuous_improvement():
+    steps = [
+        AttackStep(
+            run_id="run_001",
+            step=0,
+            queries=1,
+            success=False,
+            score=0.10,
+        ),
+        AttackStep(
+            run_id="run_001",
+            step=1,
+            queries=2,
+            success=False,
+            score=0.20,
+        ),
+        AttackStep(
+            run_id="run_001",
+            step=2,
+            queries=3,
+            success=True,
+            score=0.30,
+        ),
+    ]
+
+    assert longest_plateau(steps) == 0
+
+
+def test_longest_plateau_without_scores():
+    steps = [
+        AttackStep(
+            run_id="run_001",
+            step=0,
+            queries=1,
+            success=False,
+            score=None,
+        ),
+    ]
+
+    assert longest_plateau(steps) == 0
+
+    
