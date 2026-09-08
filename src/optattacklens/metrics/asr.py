@@ -22,6 +22,7 @@ def calculate_asr(steps: list[AttackStep]) -> float:
 
     return successful_runs / total_runs
 
+
 def calculate_asr_at_k(
     steps: list[AttackStep],
     k: int,
@@ -37,8 +38,7 @@ def calculate_asr_at_k(
         return 0.0
 
     successful_within_budget = sum(
-        queries is not None and queries <= k
-        for queries in results.values()
+        queries is not None and queries <= k for queries in results.values()
     )
 
     return successful_within_budget / len(results)

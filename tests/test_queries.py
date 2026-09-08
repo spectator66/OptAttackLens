@@ -38,6 +38,7 @@ def test_queries_to_success():
     assert result["run_001"] == 3
     assert result["run_002"] is None
 
+
 def test_queries_to_success_uses_earliest_success():
     steps = [
         AttackStep(
@@ -57,6 +58,8 @@ def test_queries_to_success_uses_earliest_success():
     result = queries_to_success(steps)
 
     assert result["run_001"] == 3
+
+
 def test_median_queries_to_success():
     steps = [
         AttackStep(
@@ -80,6 +83,8 @@ def test_median_queries_to_success():
     ]
 
     assert median_queries_to_success(steps) == 6.0
+
+
 def test_median_queries_to_success_no_success():
     steps = [
         AttackStep(

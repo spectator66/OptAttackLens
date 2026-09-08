@@ -5,12 +5,10 @@ def test_load_trace(tmp_path):
     trace_path = tmp_path / "trace.jsonl"
 
     trace_path.write_text(
-        "\n".join(
-            [
-                '{"run_id":"run_001","step":0,"queries":1,"success":false}',
-                '{"run_id":"run_001","step":1,"queries":2,"success":false}',
-                '{"run_id":"run_001","step":2,"queries":3,"success":true}',
-            ]
+        (
+            '{"run_id":"run_001","step":0,"queries":1,"success":false}\n'
+            '{"run_id":"run_001","step":1,"queries":2,"success":false}\n'
+            '{"run_id":"run_001","step":2,"queries":3,"success":true}\n'
         ),
         encoding="utf-8",
     )

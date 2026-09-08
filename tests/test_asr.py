@@ -1,6 +1,8 @@
+import pytest
+
 from optattacklens.metrics.asr import calculate_asr, calculate_asr_at_k
 from optattacklens.schema import AttackStep
-import pytest
+
 
 def test_calculate_asr():
     steps = [
@@ -29,6 +31,7 @@ def test_calculate_asr():
 
 def test_calculate_asr_empty():
     assert calculate_asr([]) == 0.0
+
 
 def test_calculate_asr_at_k():
     steps = [
@@ -61,7 +64,8 @@ def test_calculate_asr_at_k():
     assert calculate_asr_at_k(steps, 5) == 0.25
     assert calculate_asr_at_k(steps, 10) == 0.5
     assert calculate_asr_at_k(steps, 20) == 0.75
-    
+
+
 def test_calculate_asr_at_k_rejects_negative_budget():
     steps = []
 
